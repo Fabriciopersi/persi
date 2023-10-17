@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+        background-color: rgb(156, 137, 147);
+    }
+</style>
+    <meta charset="UTF-8">
+    <title>Agendamento Online</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            text-align: center;
+        }
+        #calendar {
+            width: 80%;
+            margin: 0 auto;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th, td {
+            text-align: center;
+            padding: 10px;
+        }
+        th {
+            background-color: #f0f0f0;
+        }
+        td {
+            cursor: pointer;
+        }
+        .agendado {
+            background-color: #FF0000; /* Cor para horários agendados */
+        }
+        .hoje {
+            background-color: #00FF00; /* Cor para o dia atual (verde) */
+        }
+        #navegacao {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        #calendarioMensal {
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            z-index: 999;
+        }
+        .radio-group label {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Agendamento Online</h1>
+    <div id="calendar">
+        <h2 id="nomeMes">Mês de Outubro</h2>
+        <div id="navegacao">
+            <button onclick="mesAnterior()">&lt; Mês Anterior</button>
+            <button onclick="proximaMes()">&gt; Próximo Mês</button>
+        </div>
+        <div id="calendarioMensal"></div>
+    </div>
+
+    <div class="popup" id="horariosPopup" style="display: none;">
+        <h3>Escolha um horário:</h3>
+        <div class="radio-group">
+            <label><input type="radio" name="horario" value="07:30">07:30</label>
+            <label><input type="radio" name="horario" value="08:30">08:30</label>
+            <label><input type="radio" name="horario" value="09:30">09:30</label>
+            <label><input type="radio" name="horario" value="10:30">10:30</label>
+            <label><input type="radio" name="horario" value="11:30">11:30</label>
+            <label><input type="radio" name="horario" value="12:30">12:30</label>
+            <label><input type="radio" name="horario" value="13:30">13:30</label>
+            <label><input type="radio" name="horario" value="14:30">14:30</label>
+        </div>
+        <button onclick="agendarHorario()">Agendar</button>
+        <button onclick="fecharPopup()">Fechar</button>
+    </div>
+
+    <div id="relatorio">
+        <h2>Relatório de Agendamentos</h2>
+        <ul id="agendamentos"></ul>
+    </div>
+
+    <script>
+        var dataAtual = new Date();
+        var mesAtual = dataAtual.getMonth();
+        var anoAtual = dataAtual.getFullYear();
+        var meses = [
+            "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+        ];
+
+        var calendario = document.getElementById('calendarioMensal');
+        var nomeMes = document.getElementById('nomeMes');
+
+        var horariosDisponiveis = [
+            '07:30', '08:30', '09:30', '10:30', '11:30', '12:30', '13:30', '14:30'
+        ];
+        var horariosAgendados = [];
+
+        function criarCalendarioMensal(ano, mes) {
+            nomeMes.textContent = meses[mes] + ' ' + ano;
+            
+            var primeiroDia = new Date(ano, mes, 1);
+            var ultimoDia = new Date(ano, mes + 1, 0);
+            var diaAtual = dataAtual.getDate();
+
+            var diasNoMes = ultimoDia.getDate();
+            var primeiroDiaSemana = primeiroDia.getDay(); // 0 (Domingo) a 6 (Sábado)
+
+            var nomeDiasSemana = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+
+            var tabela = '<table>';
+            tabela += '<tr>';
+            for (var i = 0; i < 7; i++) {
+                tabela += '<th>' + nomeDiasSemana[i] + '</th>';
+            }
+            tabela += '</tr>';
+
+            var dia = 1;
+            for (var i = 0; i < 6; i++) { // No máximo 6 semanas
+                tabela += '<tr>';
+                for (var j = 0; j < 7; j++) {
+                    if ((i === 0 && j < primeiroDiaSemana) || dia > diasNoMes) {
+                        tabela += '<td></td>';
+                    } else {
+                        var dataFormatada = (dia < 10 ? '0' : '') + dia + '/' + (mes < 9 ? '0' : '') + (mes + 1) + '/' + ano;
+                        if (ano === anoAtual && mes === mesAtual && dia === diaAtual) {
+                            tabela += '<td class="hoje" onclick="abrirPopup(\'' + dataFormatada + '\')">' + dia + '</td>';
+                        } else {
+                            tabela += '<td onclick="abrirPopup(\'' + dataFormatada + '\')">' + dia + '</td>';
+                        }
+                        dia++;
+                    }
+                }
+                tabela += '</tr>';
+            }
+
+            tabela += '</table>';
+            calendario.innerHTML = tabela;
+        }
+
+        criarCalendarioMensal(anoAtual, mesAtual); // Chama a função para criar o calendário no carregamento da página
+
+        function mesAnterior() {
+            if (mesAtual === 0) {
+                mesAtual = 11;
+                anoAtual--;
+            } else {
+                mesAtual--;
+            }
+            criarCalendarioMensal(anoAtual, mesAtual);
+        }
+
+        function proximaMes() {
+            if (mesAtual === 11) {
+                mesAtual = 0;
+                anoAtual++;
+            } else {
+                mesAtual++;
+            }
+            criarCalendarioMensal(anoAtual, mesAtual);
+        }
+
+        function abrirPopup(data) {
+            var horariosPopup = document.getElementById('horariosPopup');
+            horariosPopup.style.display = 'block';
+
+            // Verifique se a data já passou para não permitir agendamentos no passado
+            var dataSelecionada = new Date(data);
+            var dataAtual = new Date();
+            if (dataSelecionada < dataAtual) {
+                alert('Não é possível agendar horários no passado.');
+                horariosPopup.style.display = 'none';
+                return;
+            }
+
+            // Passe a data selecionada para a função de agendamento de horário
+            var horariosRadio = document.querySelectorAll('input[name="horario"]');
+            horariosRadio.forEach(function(radio) {
+                radio.setAttribute('data-data', data);
+            });
+
+            // Verifique se a data já foi agendada e desabilite os horários agendados
+            horariosRadio.forEach(function(radio) {
+                var horario = radio.value;
+                if (horariosAgendados.includes(data + ' às ' + horario)) {
+                    radio.disabled = true;
+                } else {
+                    radio.disabled = false;
+                }
+            });
+        }
+
+        function agendarHorario() {
+            var horariosRadio = document.querySelectorAll('input[name="horario"]');
+            var horarioSelecionado = '';
+            var dataSelecionada = '';
+            
+            horariosRadio.forEach(function(radio) {
+                if (radio.checked) {
+                    horarioSelecionado = radio.value;
+                    dataSelecionada = radio.getAttribute('data-data');
+                }
+            });
+
+            var nome = prompt('Informe seu nome:');
+            var telefone = prompt('Informe seu telefone:');
+            if (nome && telefone) {
+                var confirmacao = confirm('Deseja realmente marcar o horário em ' + dataSelecionada + ' às ' + horarioSelecionado + '?');
+                if (confirmacao) {
+                    // Verifique se o horário já foi agendado
+                    if (!horariosAgendados.includes(dataSelecionada + ' às ' + horarioSelecionado)) {
+                        horariosAgendados.push(dataSelecionada + ' às ' + horarioSelecionado);
+
+                        // Desabilite o horário escolhido
+                        horariosRadio.forEach(function(radio) {
+                            if (radio.checked) {
+                                radio.disabled = true;
+                            }
+                        });
+
+                        // Adicione o agendamento ao relatório
+                        var agendamentos = document.getElementById('agendamentos');
+                        var agendamentoTexto = nome + ' - ' + dataSelecionada + ' às ' + horarioSelecionado;
+                        var agendamentoItem = document.createElement('li');
+                        agendamentoItem.textContent = agendamentoTexto;
+                        agendamentos.appendChild(agendamentoItem);
+
+                        alert('Agendamento confirmado.');
+                        // Feche a aba de seleção de horários
+                        var horariosPopup = document.getElementById('horariosPopup');
+                        horariosPopup.style.display = 'none';
+                    } else {
+                        alert('Este horário já foi agendado. Por favor, escolha outro horário.');
+                    }
+                } else {
+                    alert('Agendamento cancelado.');
+                }
+            }
+        }
+
+        function fecharPopup() {
+            var horariosPopup = document.getElementById('horariosPopup');
+            horariosPopup.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
