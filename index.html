@@ -1,345 +1,283 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Acaiteria Zero Grau</title>
-    <style>
-        body {
-            background:  #E3DBD4;
-            color: rgb(8, 8, 8);
-            margin: 10px;
-            padding: 10px;
-            border: 1px solid #ddd;
-             cardápio */
-          
-            display: inline-block;
-        }
-
-        Cardápio {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            font-size: 60px;
-
-        }
-
-        .menu-item {
-            margin: 10px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            background: #773896; /* Cor de fundo para os itens do cardápio */
-            color: white; /* Cor do texto nos itens do cardápio */
-            display: inline-block;
-          
-        }
-
-        .complemento-label {
-            display: block;
-            font-size: 20px;
-            color: #f9f1f1;
-        }
-
-        .popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #A349A4; /* Cor de fundo para a janela pop-up */
-            color: rgb(92, 37, 37); /* Cor do texto na janela pop-up */
-            padding: 20px;
-            z-index: 1000;
-        }
+    <head>
+        <style>
+            @font-face{
+                font-family: 'PoppinsRegular';
+                src: url('../fonts/Poppins-Regular.otf');
+            }
+            
+            :root {
+                --color-background: #ffffff;
+                --color-black: #212121;
+                --color-text: #4f4f4f;
+                --color-text-out: #90908e;
+                --color-primary: #ffdb11;
+                --color-secondary: #fff2cc;
+                --color-white: #ffffff;
+                --color-red: #e74c3c;
+                --color-green: #2ecc71;
+                --color-separate: #cccccc;
+            
+            }
+            html, body {
+                font-family: 'PoppinsRegular', 'Rubik', sans-serif;
+                background-color: var(--color-background);
+                color: var(--color-text);
+            }
+            b {
+                font-family: 'PoppinsMedium', 'Rubik', sans-serif;
+            }
+            .color-primary {
+                color: var(--color-primary);
+            }
+            a.navbar-brand{
+                margin-left: -90px;
+            }
+            .nav-link{
+                color: var(--color-black)!important;
+                padding-left: 35px!important;
+                padding-right: 35px!important;
+            
+            
+            }
+            
+            .btn-white {
+                background-color: var(--color-white); 
+                color: var(--color-black)!important; 
+                border-radius: 20px; 
+                padding: 15px 25px; 
+                font-size: 20px;
+                box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
+            }
+            .btn-icon {
+                padding-right: 75px;
+            }
+            .btn-icon .icon{
+                display: inline-block;
+                color: var(--color-black);
+                background-color: var(--color-primary);
+                width: 45px; 
+                height: 45px;
+                position: absolute;
+                right: 10px;
+                margin-top: -8px; 
+                border-radius: 15px; 
+                text-align: center; 
+                padding-top: 6px;
+            }
+            .banner {
+                padding-top: 110px;
+                padding-bottom: 200px;
+            }
+            .text-banner {
+                flex-direction: column;
+                justify-content: center;
+                margin-bottom: 60px; 
+                
+            
+            }
+            .text-banner h1 {
+                color: var(--color-black);
+                font-size: 60px;
+                //padding-left: 60px;
+            }
+            .text-banner p {
+                margin-top: 15px;
+                margin-bottom: 15px;
+                font-size: 20px;
+                //padding-left: 60px;
+            }
+            
+            .btn-yellow {
+                background-color: var(--color-primary);
+                color: var(--color-white)!important;
+                border-radius: 20px;
+                padding: 15px 25px;
+                font-size: 20px;
+                box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
+            }
+            .btn-icon-left {
+                padding-left: 70px;
+            }
+            .btn-icon-left span.icon-left {
+                display: inline-block;
+                color: var(--color-white);
+                background-color: var(--color-primary);
+                width: 45px;
+                height: 45px;
+                position: absolute;
+                margin-left: -60px;
+                margin-top: -8px;
+                border-radius: 15px;
+                text-align: center;
+                padding-top: 8px;
+            
+            }
+            .btn-sm {
+                padding: 9px 15px!important;
+                border-radius: 15px!important;
+                font-size: 18px!important;
+            
+            }
+            .btn-social {
+                width: 50px;
+            }
+            .card-banner {
+                height: 400px;
+                width: 400px;
+                border-radius: 170px;
+                background-color: #f4c949;
+                position: absolute;
+                right: -1225;
+                top: -30px;
+            }
+            .img-acai {
+                height: 400px;
+                width: 400px;
+                border-radius: 0px;
+                position: absolute;
+                right: -1225;
+                top: -30px;
+            
+            }
+        </style>
         
-        button {
-            background: #E3DBD4; /* Cor de fundo para botões */
-            color: rgb(8, 1, 1); /* Cor do texto nos botões */
-        }
+        <title>Açaiteria Zero Grau</title>
+        <link rel="stylesheet" href="./css/bootstrap.min.css" />
+        <link rel="stylesheet" href="./css/fontawesome.css" />
+        <link rel="stylesheet" href="./css/main.css" />
 
-        h1, h2, label {
-            color: #000000; /* Cor do texto para títulos e rótulos */
-            font-size: 20px;
+    <body>
+        <section class "header">
+            <div class="container">
+                <nav class="navbar navbar-expand-lg pl-0 pr-0 col-one">
+                    <a class="navbar-brand" href="#">
+                        <img src="./img/logo.png" width="160" class="img-logo" />
+                    
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown">
+                        <span class="navbar-toggler-icon">
+                            <i class="fas fa-bars"></i>
+                        </span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                        <ul class="navbar-nav ml-auto mr-auto">
+                            <li class="nav-item">
+                                <a href="#reservas" class="nav-link"><b>Reservas</b></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#servicos" class="nav-link"><b>Serviços</b></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#cardapio" class="nav-link"><b>Cardápio</b></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#depoimentos" class="nav-link"><b>Depoimentos</b></a>
+                            </li>
+                    
+                        </ul>
+                        <a class="btn btn-white btn-icon">
+                            Meu carrinho <span class="icon">
+                                <i class="fa fa-shopping-bag"></i>
+                            </span>
+                        </a>
+
+                    </div>
+                </nav>
+
+            </div>
+
+        </section>
+
+        <section class "banner">
+            <div class+"container>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="d-flex text-banner">
+                            <h1><b>Escolha seu Açai <b class  ="color-primary">Preferido.</b></b></h1>
+                            <p>
+                                Aproveite nosso cardápio! Escolha o que melhor te agrada.
+                            </p>
+                            <div>
+                                <a class="btn btn-yellow mt-4 mr-3">
+                                    Ver Cardápio
+                                </a>
+                                <a href="https://api.whatsapp.com/send?phone=+5527998559016&text=Ola%20Bom%20dia%20Gostaria%20de%20fazer%20um%20pedido!" class="btn btn-white btn-icon-left mt-4" >
+                                    <span class="icon-left">
+                                        <i class="fa fa-phone"></i>
+                                    </span> 
+                                    (27) 99855-9016
+                                </a>
+                            </div>
+
+                        </div>
+                        <a class="btn btn-sm btn-white btn-social mt-4 mr-3">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a class="btn btn-sm btn-white btn-social mt-4 mr-3">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a class="btn btn-sm btn-white btn-social mt-4">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
+                    <div class="col-6">
+                        <div class="card-banner"></div>
+                        <div class="d-flex img-banner">
+                            <img src="./img/acai_morango-removebg-preview.png" class= img-acai />
+                        </div>
+                        <div class="card card-case">
+                            "Entrega rápida e funcionarios simpáticos.<br>O Açai chegou antes do esperado <br> e muito saboroso!"
+                            <span class="card-case-name">
+                                <b>Thiago Lopes</b>
+                            </span>
+                        
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>"
             
-        }
-        ul {
-            font-size: 20px;
-            color: #0f0e0e;
+        </section>
 
-        }
-
-
-    </style>
-</head>
-<body>
-    <div style="position: relative; width: 100%; height: 0; padding-top: 10.0000%;
-        padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
-        border-radius: 8px; will-change: transform;">
-        <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
-        src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAFxWlIk7Mo&#x2F;view?embed">
-        </iframe>
-    </div> 
-    <h1>Cardápio</h1>
-    
-    <div class="menu-item">
-    <div style="position: relative; width: 100%; height: 0; padding-top: 60.0000%;
-        padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
-        border-radius: 8px; will-change: transform;">
-        <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
-        src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAFxWzdywf8&#x2F;view?embed">
-        </iframe>
-        </div>
-        <h2>Açaí com Morango - R$ 12,50</h2>
-        <button onclick="openPopup('Açaí com Morango', 12.50)">Personalizar</button>
-    </div>
-    <div class="menu-item">
-        <div style="position: relative; width: 100%; height: 0; padding-top: 60.0000%;
-        padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
-        border-radius: 8px; will-change: transform;">
-        <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
-        src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAFxWzdywf8&#x2F;view?embed">
-        </iframe>
-        </div>
-        <h2>Açaí com Frutas - R$ 16,00</h2>
-        <button onclick="openPopup('Açaí com Frutas', 16.00)">Personalizar</button>
-    </div>
-    <div class="menu-item">
-        <div style="position: relative; width: 100%; height: 0; padding-top: 60.0000%;
-        padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
-        border-radius: 8px; will-change: transform;">
-        <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
-        src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAFxWzdywf8&#x2F;view?embed">
-        </iframe>
-        </div>
-        <h2>Açaí com Nutella - R$ 22,50</h2>
-        <button onclick="openPopup('Açaí com Nutella', 22.50)">Personalizar</button>
-    </div>
-      <div class="menu-item">
-        <div style="position: relative; width: 100%; height: 0; padding-top: 60.0000%;
-        padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
-        border-radius: 8px; will-change: transform;">
-        <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
-        src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAFxWzdywf8&#x2F;view?embed">
-        </iframe>
-        </div>
-        <h2>Açaí com Jujuba - R$ 18,50</h2>
-        <button onclick="openPopup('Açaí com Jujuba', 18.50)">Personalizar</button>
-    </div>
-    <div class="menu-item">
-        <div style="position: relative; width: 100%; height: 0; padding-top: 60.0000%;
-        padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
-        border-radius: 8px; will-change: transform;">
-        <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
-        src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAFxWzdywf8&#x2F;view?embed">
-        </iframe>
-        </div>
-        <h2>Açaí com Morango - R$ 12,50</h2>
-        <button onclick="openPopup('Açaí com Morango', 12.50)">Personalizar</button>
-    </div>
-    <div class="menu-item">
-        <div style="position: relative; width: 100%; height: 0; padding-top: 60.0000%;
-        padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
-        border-radius: 8px; will-change: transform;">
-        <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
-        src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAFxWzdywf8&#x2F;view?embed">
-        </iframe>
-        </div>
-        <h2>Açaí com Frutas - R$ 16,00</h2>
-        <button onclick="openPopup('Açaí com Frutas', 16.00)">Personalizar</button>
-    </div>
-    <div class="menu-item">
-        <div style="position: relative; width: 100%; height: 0; padding-top: 60.0000%;
-        padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
-        border-radius: 8px; will-change: transform;">
-        <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
-        src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAFxWzdywf8&#x2F;view?embed">
-        </iframe>
-        </div>
-        <h2>Açaí com Nutella - R$ 22,50</h2>
-        <button onclick="openPopup('Açaí com Nutella', 22.50)">Personalizar</button>
-    </div>
-      <div class="menu-item">
-        <div style="position: relative; width: 100%; height: 0; padding-top: 60.0000%;
-        padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
-        border-radius: 8px; will-change: transform;">
-        <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
-        src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAFxWzdywf8&#x2F;view?embed">
-        </iframe>
-        </div>
-        <h2>Açaí com Jujuba - R$ 18,50</h2>
-        <button onclick="openPopup('Açaí com Jujuba', 18.50)">Personalizar</button>
-    </div>
-    <div class="menu-item">
-        <div style="position: relative; width: 100%; height: 0; padding-top: 60.0000%;
-        padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
-        border-radius: 8px; will-change: transform;">
-        <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
-        src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAFxWzdywf8&#x2F;view?embed">
-        </iframe>
-        </div>
-        <h2>Açaí com Morango - R$ 12,50</h2>
-        <button onclick="openPopup('Açaí com Morango', 12.50)">Personalizar</button>
-    </div>
-    <div class="menu-item">
-        <div style="position: relative; width: 100%; height: 0; padding-top: 60.0000%;
-        padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
-        border-radius: 8px; will-change: transform;">
-        <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
-        src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAFxWzdywf8&#x2F;view?embed">
-        </iframe>
-        </div>
-        <h2>Açaí com Frutas - R$ 16,00</h2>
-        <button onclick="openPopup('Açaí com Frutas', 16.00)">Personalizar</button>
-    </div>
-    
-  
-
-    <div id="popup" class="popup">
-        <h2>Complementos</h2>
-        <label class="complemento-label">
-            <input type="checkbox" name="complemento" value="Brigadeiro"> Brigadeiro
-        </label>
-        <label class="complemento-label">
-            <input type="checkbox" name="complemento" value="Leite em Pó"> Leite em Pó
-        </label>
-        <label class="complemento-label">
-            <input type="checkbox" name="complemento" value="Amendoim"> Amendoim
-        </label>
-        <label class="complemento-label">
-            <input type="checkbox" name="complemento" value="Granulado"> Granulado
-        </label>
-        <label class="complemento-label">
-            <input type="checkbox" name="complemento" value="Passas"> Passas
-        </label>
-        <label class="complemento-label">
-            <input type="checkbox" name="complemento" value="Banana"> Banana
-        </label>
-        <label class="complemento-label">
-            <input type="checkbox" name="complemento" value="Leite condensado"> Leite condensado
-        </label>
-        <label class="complemento-label">
-            <input type="checkbox" name="complemento" value="Manga"> Manga
-        </label>
-        <label class="complemento-label">
-            <input type="checkbox" name="complemento" value="Sem Complemento"> Sem Complemento
-        </label>
-        <button onclick="confirmarPersonalizacao()">Confirmar</button>
-    </div>
-
-    <h2>Seu Carrinho:</h2>
-    <ul id="carrinho">
-        <!-- Itens escolhidos serão exibidos aqui -->
-    </ul>
-
-    <h2>Total: R$<span id="total">0.00</span></h2>
-
-    <h2>Forma de Pagamento:</h2>
-    <label>
-        <input type="radio" name="pagamento" value="Dinheiro"> Dinheiro
-    </label>
-    <label>
-        <input type="radio" name="pagamento" value="Pix"> Pix
-    </label>
-    <label>
-        <input type="radio" name="pagamento" value="Cartão"> Cartão
-    </label>
-
-    <h2>Dados Pessoais:</h2>
-    <label for="nome">Nome:</label>
-    <input type="text" id="nome" name="nome" required>
-    <br>
-    <label for="telefone">Número de Telefone:</label>
-    <input type="text" id="telefone" name="telefone" required>
-    <br>
-    <label for="email">E-mail:</label>
-    <input type="email" id="email" name="email" required>
-
-    <h2>Endereço de Entrega:</h2>
-    <label for="endereco">Endereço Completo:</label>
-    <input type="text" id="endereco" name="endereco" required>
-    <br>
-    <button onclick="enviarPedido()">Enviar Pedido</button>
-
-    <script>
-        let carrinho = [];
-        let total = 0;
-        let acaiSelecionado = "";
-        let precoAcaiSelecionado = 0;
-        let valorTotal = 0;
-
-        function openPopup(acai, preco) {
-            acaiSelecionado = acai;
-            precoAcaiSelecionado = preco;
-            document.getElementById("popup").style.display = "block";
-        }
-
-        function confirmarPersonalizacao() {
-            const complementos = Array.from(document.querySelectorAll('input[name="complemento"]:checked')).map(checkbox => checkbox.value);
-            carrinho.push({ acai: acaiSelecionado, complementos: complementos });
-            total += precoAcaiSelecionado;
-            document.getElementById("popup").style.display = "none";
-            limparComplementos();
-            atualizarCarrinho();
-        }
-
-        function limparComplementos() {
-            const complementos = document.querySelectorAll('input[name="complemento"]');
-            complementos.forEach(checkbox => {
-                checkbox.checked = false;
-            });
-        }
-
-        function atualizarCarrinho() {
-        const carrinhoElement = document.getElementById("carrinho");
-        carrinhoElement.innerHTML = "";
-        carrinho.forEach(item => {
-            const listItem = document.createElement("li");
-            listItem.textContent = `${item.acai} + Complementos: ${item.complementos.join(', ')}`;
-            carrinhoElement.appendChild(listItem);
-        });
-
-        // Atualizar o valor total
-        valorTotal = total;
-        document.getElementById("total").textContent = valorTotal.toFixed(2);
-    }
-
-        function enviarPedido() {
-            // Coletar dados de pagamento, dados pessoais e endereço
-            const formaPagamento = document.querySelector('input[name="pagamento"]:checked').value;
-            const nome = document.getElementById("nome").value;
-            const telefone = document.getElementById("telefone").value;
-            const email = document.getElementById("email").value;
-            const endereco = document.getElementById("endereco").value;
-            const valortotal = document.getElementById("total").value;
-
-
-            // Preparar as informações do pedido
-            const pedido = {
-                acai: carrinho,
-                pagamento: formaPagamento,
-                dadosPessoais: {
-                    nome,
-                    telefone,
-                    email,
-                },
-                endereco, valorTotal: valorTotal,
-            };
-
-            // Formatando a mensagem para exibir como desejado
-            const mensagemFormatada = formatarMensagem(pedido);
-
-            // Substitua esta linha pelo método de envio para o WhatsApp desejado
-            window.open(`https://wa.me/5521965720081?text=${encodeURIComponent(mensagemFormatada)}`);
-        }
-
-        function formatarMensagem(pedido) {
-            const acaiPedido = pedido.acai.map(item => `${item.acai} + Complementos: ${item.complementos.join(', ')}`).join('\n');
-            const dadosPessoais = `Nome: ${pedido.dadosPessoais.nome}\nTelefone: ${pedido.dadosPessoais.telefone}\nEmail: ${pedido.dadosPessoais.email}`;
-            const endereco = `Endereço de Entrega: ${pedido.endereco}`;
+        <section class "servicos" id="serviços">
             
+        </section>
 
-            return `Pedido:26548\n-\n${acaiPedido}\n\nValor Total:${total}\nForma de Pagamento: ${pedido.pagamento}\n\n- Dados Pessoais:\n${dadosPessoais}\n\n${endereco}`;
-        }
-    </script>
-</body>
+        <section class "cardapio" id="cardapio">
+            
+        </section>
+
+        <section class "depoimentos" id="depoimentos">
+            
+        </section>
+
+        <section class "reservas" id="reservas">
+            
+        </section>
+
+        <footer>
+
+
+        </footer>
+
+
+
+
+        <script type="text/javascript" src="./js/jquery-1.12.4.min.js"></script>
+        <script type="text/javascript" src="./js/modernizr-3.5.0.min.js"></script>
+        <script type="text/javascript" src="./js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="./js/popper.min.js"></script>
+
+    </body>
+
+
+
+
+
+    </head>
+
+
 </html>
-
